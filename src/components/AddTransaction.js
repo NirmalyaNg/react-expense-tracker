@@ -4,15 +4,20 @@ import { GlobalContext } from "../GlobalState/GlobalContext";
 const AddTransaction = () => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState(0);
+  const [transactionType, setTransactionType] = useState("income");
+
+  const incomeSelected = transactionType === "income";
+  const expenseSelected = transactionType === "expense";
 
   // To get access to action add
   const { addTran } = useContext(GlobalContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTran(text, amount);
+    addTran(text, amount, transactionType);
     setText("");
     setAmount(0);
+    setTransactionType("income");
   };
 
   return (
@@ -30,10 +35,19 @@ const AddTransaction = () => {
           />
         </div>
         <div className="form-control">
-          <label htmlFor="amount">
-            Amount <br />
-            (negative - expense, positive - income)
-          </label>
+          <label htmlFor="transaction-type">Transaction Type</label>
+          <select
+            id="transaxction-type"
+            onChange={(e) => setTransactionType(e.target.value)}
+          >
+            <option value="expense" selected={expenseSelected}>
+              Expense
+            </option>
+            <option value="income" selected={incomeSelected}>
+              Income
+            </option>
+          </select>
+          <label htmlFor="amount">Amount</label>
           <input
             type="number"
             id="amount"

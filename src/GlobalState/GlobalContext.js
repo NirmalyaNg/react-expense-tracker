@@ -16,13 +16,14 @@ export const GlobalProvider = (props) => {
 
   // Actions
 
-  const addTransaction = (text, amount) => {
+  const addTransaction = (text, amount, transactiontType) => {
     dispatch({
       type: "ADD_TRANSACTION",
       payload: {
         id: uuid(),
         text: text,
-        amount: parseInt(amount),
+        amount:
+          transactiontType === "income" ? parseInt(amount) : -parseInt(amount),
       },
     });
   };
